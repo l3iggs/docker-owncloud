@@ -35,5 +35,7 @@ RUN sudo chown -R http:http /usr/share/webapps/owncloud/
 EXPOSE 80 80
 EXPOSE 443 443
 
+VOLUME /usr/share/webapps/owncloud/data /etc/webapps/owncloud/config
+
 # start apache and mysql
 CMD cd '/usr'; sudo /usr/bin/mysqld_safe --datadir='/var/lib/mysql'& sudo apachectl -DFOREGROUND
