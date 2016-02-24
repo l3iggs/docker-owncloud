@@ -59,6 +59,9 @@ RUN sed -i "s,php_value post_max_size 513M,php_value post_max_size ${MAX_UPLOAD_
 RUN sed -i 's/open_basedir = \/srv\/http\/:\/home\/:\/tmp\/:\/usr\/share\/pear\/:\/usr\/share\/webapps\//open_basedir = \/srv\/http\/:\/home\/:\/tmp\/:\/usr\/share\/pear\/:\/usr\/share\/webapps\/:\/etc\/webapps\//g' /etc/php/php.ini  # fixes issue with config not editable and occ errors (Issue #44)
 RUN sed -i 's/;extension=posix.so/extension=posix.so/g' /etc/php/php.ini  # needed for cron / occ (Issue #42)
 
+# enable mod_rewrite
+RUN sed -i '/^#LoadModule rewrite_module modules\/mod_rewrite.so/s/^#//g' /etc/httpd/conf/httpd.conf
+
 # setup Apache for owncloud
 RUN cp /etc/webapps/owncloud/apache.example.conf /etc/httpd/conf/extra/owncloud.conf
 RUN sed -i '/<VirtualHost/,/<\/VirtualHost>/d' /etc/httpd/conf/extra/owncloud.conf
